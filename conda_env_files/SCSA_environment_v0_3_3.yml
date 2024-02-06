@@ -1,6 +1,6 @@
 name: SCSAWorkflow_NIDAP_v0_3_3
 channels:
-  - file:///rstudio-files/ccbr-data/users/RH/nidap_hpc_environment_twin/local_channel/
+  - file:///gpfs/gsfs9/users/BIDS-HPC/public/software/nidap_hpc_environment_twin/local_channel/
   - ohsu-comp-bio
   - conda-forge
   - leej3
