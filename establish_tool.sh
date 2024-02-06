@@ -22,7 +22,6 @@ UPDATE_VERSIONS="TRUE"
 
 CONDA_BRANCH="Conda_Package"
 
-CONDA_STARTUP="/rstudio-files/ccbr-data/users/RH/Own_Conda/rh_conda/etc/profile.d/conda.sh"
 
 ##############################################################
 ##############################################################
@@ -41,6 +40,9 @@ conda_env_dir="$script_dir/conda_env_files"
 WORKFLOW_PKG_DIR="$script_dir/workflow_packages"
 WORKFLOW_ENV_DIR="$script_dir/workflow_envs"
 MAINTENANCE_LOG_DIR="$script_dir/$RUN_LOG_FOLDER"
+CONDA_INSTALLATION="$script_dir/conda_base/nidap_hpc_env_twin"
+CONDA_STARTUP="$CONDA_INSTALLATION/etc/profile.d/conda.sh"
+
 
 if [ ! -d "$WORKFLOW_PKG_DIR" ]; then
   mkdir "$WORKFLOW_PKG_DIR"
@@ -54,15 +56,44 @@ if [ ! -d "$MAINTENANCE_LOG_DIR" ]; then
   mkdir "$MAINTENANCE_LOG_DIR"
 fi
 
+if [ ! -d "$CONDA_INSTALLATION" ]; then
+  mkdir -p "$CONDA_INSTALLATION"
+fi
 
 echo "################################################"
 echo "################################################"
 echo "################################################"
+
 
 # Start of the script's operations, redirecting all output to the log file
 log_file="${MAINTENANCE_LOG_DIR}/NIDAP_HPC_ENV_Deployment_${datetime}.log"
 echo $log_file
 exec > >(tee "${log_file}") 2>&1
+
+
+echo "Checking Conda Installation Now..."
+
+if [ -f "$CONDA_STARTUP" ]; then
+  echo "Conda Installation for This Project Exists! Continue..."
+else:
+  echo "Installing Project Conda Now..."
+  wget \
+    https://repo.anaconda.com/miniconda/Miniconda3-py38_22.11.1-1-Linux-x86_64.sh \
+    && bash Miniconda3-py38_22.11.1-1-Linux-x86_64.sh -b -p "$CONDA_INSTALLATION"\
+    && rm -f Miniconda3-py38_22.11.1-1-Linux-x86_64.sh
+    
+  echo "################################################"
+  echo "################################################"
+  echo "################################################"
+  echo "Installing libmamba solver now..."
+  echo "Activating Conda base environment..."
+  source "$CONDA_STARTUP"
+  conda activate base
+  conda --version
+  conda install -n base conda-libmamba-solver \
+  && conda config --set solver libmamba
+  conda deactivate
+fi
 
 # Preping Conda Environment
 # Check if Conda base environment is activated
