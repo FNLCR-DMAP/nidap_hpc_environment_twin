@@ -1,0 +1,30 @@
+name: SCSAWorkflow_NIDAP
+channels:
+  - file:///rstudio-files/ccbr-data/users/RH/NIDAP_HPC_Env_Mirror/local_channel/
+  - ohsu-comp-bio
+  - conda-forge
+  - leej3
+dependencies:
+  - python=3.8.16
+  - pip
+  - matplotlib=3.5.2
+  - anndata=0.8.0
+  - numpy=1.19.5
+  - scikit-learn
+  - seaborn
+  - scanpy=1.8.0
+  - plotly
+  - cookiecutter
+  - datashader
+  - numba
+  - Pillow
+  - zarr=2.12.0
+  - pip:
+    - phenograph==1.5.7
+    - pandas==1.4.3
+    - squidpy
+    - pylint
+    - pytest
+    - sphinx
+    - flake8
+    - gendocs

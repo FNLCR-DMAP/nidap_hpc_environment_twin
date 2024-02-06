@@ -1,0 +1,77 @@
+name: SCWorkflow_NIDAP
+channels:
+  - file:///rstudio-files/ccbr-data/users/RH/NIDAP_HPC_Env_Mirror/local_channel/
+  - bioconda
+  - conda-forge
+dependencies:
+  - r-base==4.1.3
+  - r-biocmanager
+  - bioconductor-celldex=1.4.1
+  - bioconductor-complexheatmap==2.10.0
+  - bioconductor-edger>=3.36.0
+  - bioconductor-fgsea==1.20.0
+  - bioconductor-genomeinfodbdata==1.2.6
+  - bioconductor-limma>=3.50.3
+  - bioconductor-mast==1.20.0
+  - bioconductor-scater  # version not specified
+  - bioconductor-scdblfinder  # version not specified
+  - bioconductor-singler==1.8.1
+  - bioconductor-singlecellexperiment  # version not specified
+  - r-anndata==0.7.5.2
+  - r-arrow==8.0.0
+  - r-callr>=3.7.1
+  - r-colorspace  # version not specified
+  - r-cowplot>=1.1.1
+  - r-data.table>=1.14.2
+  - r-dendextend  # version not specified
+  - r-dendsort  # version not specified
+  - r-devtools
+  - r-digest>=0.6.29
+  - r-dplyr==1.1.0
+  - r-future>=1.27.0
+  - r-future.apply>=1.9.0
+  - r-gargle>=1.2.0
+  - r-gdata  # version not specified
+  - r-ggplot2==3.3.6
+  - r-ggpubr==0.4.0
+  - r-globals>=0.16.1
+  - r-ggrepel  # version not specified
+  - r-gridbase==0.4_7
+  - r-gridextra==2.3
+  - r-gtable>=0.3.1
+  - r-harmony>=0.1.1
+  - r-hdf5r==1.3.5
+  - r-htmlwidgets  # version not specified
+  - r-httpuv>=1.6.5
+  - r-httr  # version not specified
+  - r-jsonlite  # version not specified
+  - r-leiden>=0.4.2
+  - r-lintr
+  - r-magrittr>=2.0.3
+  - r-markdown>=1.1
+  - r-matrix>=1.4.2
+  - r-pheatmap  # version not specified
+  - r-pkgdown
+  - r-plotly>=4.10.0
+  - r-png  # version not specified
+  - r-pryr==0.1.5
+  - r-plyr 
+  - r-progressr>=0.10.1
+  - r-purrr>=0.3.4
+  - r-quantmod>=0.4.20
+  - r-rcolorbrewer==1.1_3
+  - r-renv
+  - r-reshape2==1.4.4
+  - r-reticulate>=1.25
+  - r-rlang>=1.0.6
+  - r-scales  # version not specified
+  - r-seurat==4.1.1
+  - r-statmod>=1.4.37
+  - r-stringr==1.4.1
+  - r-svglite==2.1.0
+  - r-tibble>=3.1.8
+  - r-tidyr  # version not specified
+  - r-tidyverse>=1.3.2
+  - r-viridislite>=0.4.0
+  - r-xfun>=0.32
+  - r-zip>=2.2.0
