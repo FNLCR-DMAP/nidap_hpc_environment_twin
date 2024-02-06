@@ -1,6 +1,6 @@
 name: SCWorkflow_NIDAP_v1_0_2
 channels:
-  - file:///rstudio-files/ccbr-data/users/RH/NIDAP_HPC_Env_Mirror/local_channel/
+  - file:///rstudio-files/ccbr-data/users/RH/nidap_hpc_environment_twin/local_channel/
   - bioconda
   - conda-forge
 dependencies:

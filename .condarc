@@ -1,0 +1,11 @@
+channels:
+  - anaconda
+  - conda-forge
+  - leej3
+  - bioconda
+auto_activate_base: false
+pip_interop_enabled: true
+verbosity: 1
+envs_dirs:
+pkgs_dirs:
+show_channel_urls: true

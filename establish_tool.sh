@@ -40,8 +40,8 @@ conda_env_dir="$script_dir/conda_env_files"
 WORKFLOW_PKG_DIR="$script_dir/workflow_packages"
 WORKFLOW_ENV_DIR="$script_dir/workflow_envs"
 MAINTENANCE_LOG_DIR="$script_dir/$RUN_LOG_FOLDER"
-CONDA_INSTALLATION="$script_dir/conda_base/nidap_hpc_env_twin"
-CONDA_STARTUP="$CONDA_INSTALLATION/etc/profile.d/conda.sh"
+CONDA_INSTALLATION="$script_dir/conda_base"
+CONDA_STARTUP="$CONDA_INSTALLATION/nidap_hpc_env_twin/etc/profile.d/conda.sh"
 
 
 if [ ! -d "$WORKFLOW_PKG_DIR" ]; then
@@ -57,7 +57,7 @@ if [ ! -d "$MAINTENANCE_LOG_DIR" ]; then
 fi
 
 if [ ! -d "$CONDA_INSTALLATION" ]; then
-  mkdir -p "$CONDA_INSTALLATION"
+  mkdir "$CONDA_INSTALLATION"
 fi
 
 echo "################################################"
@@ -75,12 +75,13 @@ echo "Checking Conda Installation Now..."
 
 if [ -f "$CONDA_STARTUP" ]; then
   echo "Conda Installation for This Project Exists! Continue..."
-else:
-  echo "Installing Project Conda Now..."
+else
+  echo "Installing Project Conda Now...".
+  conda_version_to_install="Miniconda3-py38_23.9.0-0-Linux-x86_64.sh"
   wget \
-    https://repo.anaconda.com/miniconda/Miniconda3-py38_22.11.1-1-Linux-x86_64.sh \
-    && bash Miniconda3-py38_22.11.1-1-Linux-x86_64.sh -b -p "$CONDA_INSTALLATION"\
-    && rm -f Miniconda3-py38_22.11.1-1-Linux-x86_64.sh
+    https://repo.anaconda.com/miniconda/$conda_version_to_install \
+    && bash $conda_version_to_install -b -p "$CONDA_INSTALLATION/nidap_hpc_env_twin"\
+    && rm -f $conda_version_to_install
     
   echo "################################################"
   echo "################################################"
@@ -90,9 +91,40 @@ else:
   source "$CONDA_STARTUP"
   conda activate base
   conda --version
-  conda install -n base conda-libmamba-solver \
-  && conda config --set solver libmamba
-  conda deactivate
+  
+  conda install -n base -y conda-libmamba-solver
+
+  if [ $? -eq 0 ]; then
+      echo "Solver libmamba installed successfully."
+  else
+      conda deactivate
+      echo "Error occurred while installeding the libmamba. Script terminated."
+      exit 1
+  fi
+  
+  conda install -c conda-forge -y conda-build
+
+  if [ $? -eq 0 ]; then
+      echo "Conda build installed successfully."
+  else
+      conda deactivate
+      echo "Error occurred while installeding the Conda build. Script terminated."
+      exit 1
+  fi
+  
+  # Set the solver to libmamba
+  conda config --set solver libmamba
+  
+  # Check if the command was successful
+  if [ $? -eq 0 ]; then
+      echo "Solver set to libmamba successfully."
+      conda deactivate
+  else
+      conda deactivate
+      echo "Error occurred while setting the solver to libmamba. Script terminated."
+      exit 1
+  fi
+
 fi
 
 # Preping Conda Environment
@@ -107,6 +139,18 @@ else
   echo "Conda base environment is already activated."
 fi
 
+echo "Setting Conda Solver..."
+conda config --set solver libmamba
+if [ $? -eq 0 ]; then
+    echo "Solver set to libmamba successfully."
+    conda deactivate
+else
+    conda deactivate
+    echo "Error occurred while setting the solver to libmamba. Script terminated."
+    exit 1
+fi
+
+echo "Setting local channel..."
 # Changing environment locations
 conda config --prepend envs_dirs $WORKFLOW_ENV_DIR
 
