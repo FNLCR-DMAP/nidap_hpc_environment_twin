@@ -3,5 +3,6 @@ This tool script is to establish a digital twin environment between NIDAP and HP
 
 The Conda_Method tag refers to setting the environment in Conda for each target package updates.
 
+Experimenting with creating singularity container for each target package updates.
 
 
